@@ -1,8 +1,6 @@
--- ==============================================================
 -- CareerTwin AI — Migration 0002
--- Permite operar o MVP apenas com a publishable key (sem chave
--- secreta): o servidor atua com a sessão do próprio usuário (RLS).
--- ==============================================================
+-- Permite operar o MVP apenas com a publishable key (sem chave secreta):
+-- o servidor atua com a sessão do próprio usuário (RLS).
 
 -- O servidor grava o resultado da IA na análise do próprio usuário
 create policy "analyses: atualização própria" on public.analyses
