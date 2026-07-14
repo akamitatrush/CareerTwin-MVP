@@ -1,26 +1,179 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-roboto), Arial, sans-serif;
+  --font-heading: var(--font-sans);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-soft-hover: var(--primary-soft-hover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-surface-subtle: var(--surface-subtle);
+  --color-surface-dark: var(--surface-dark);
+  --color-text-muted: var(--text-muted);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-error: var(--error);
+  --color-error-soft: var(--error-soft);
+
+  /* Desktop começa em 1200px (spec CareerTwin) */
+  --breakpoint-xl: 75rem;
+
+  /* Geometria: botão/input 8px · card 12px · card grande/imagem 16px */
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+
+  --shadow-card: 0 4px 16px rgba(50, 45, 45, 0.06);
+  --shadow-floating: 0 12px 32px rgba(50, 45, 45, 0.1);
+  --shadow-header: 0 1px 0 rgba(50, 45, 45, 0.08);
+
+  /* Escala tipográfica CareerTwin (Roboto) */
+  --text-display: 4rem;
+  --text-display--line-height: 4.25rem;
+  --text-display--font-weight: 800;
+  --text-display--letter-spacing: -0.03em;
+  --text-display-md: 3rem;
+  --text-display-md--line-height: 3.375rem;
+  --text-display-md--font-weight: 800;
+  --text-display-md--letter-spacing: -0.025em;
+  --text-display-sm: 2.375rem;
+  --text-display-sm--line-height: 2.75rem;
+  --text-display-sm--font-weight: 800;
+  --text-display-sm--letter-spacing: -0.02em;
+  --text-h1: 3rem;
+  --text-h1--line-height: 3.5rem;
+  --text-h1--font-weight: 700;
+  --text-h2: 2.25rem;
+  --text-h2--line-height: 2.75rem;
+  --text-h2--font-weight: 700;
+  --text-h3: 1.5rem;
+  --text-h3--line-height: 2rem;
+  --text-h3--font-weight: 700;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.5rem;
+
+  --background: #ffffff;
+  --foreground: #322d2d;
+  --card: #ffffff;
+  --card-foreground: #322d2d;
+  --popover: #ffffff;
+  --popover-foreground: #322d2d;
+
+  --primary: #fb5302;
+  --primary-foreground: #ffffff;
+  --primary-hover: #e64b02;
+  --primary-active: #cc4200;
+  --primary-soft: #fff0e8;
+  --primary-soft-hover: #ffe4d6;
+
+  --secondary: #faf9f8;
+  --secondary-foreground: #322d2d;
+  --muted: #faf9f8;
+  --muted-foreground: #68615f;
+  --accent: #fff0e8;
+  --accent-foreground: #cc4200;
+
+  --destructive: #c9362b;
+  --border: #e7e1de;
+  --border-strong: #d4cdca;
+  --input: #d4cdca;
+  --ring: #fb5302;
+
+  --surface-subtle: #faf9f8;
+  --surface-dark: #000000;
+  --text-muted: #8a8380;
+
+  --success: #23855a;
+  --success-soft: #eaf7f0;
+  --warning: #b86b00;
+  --warning-soft: #fff5e3;
+  --error: #c9362b;
+  --error-soft: #fdecea;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  ::selection {
+    background-color: var(--primary-soft-hover);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Container CareerTwin: conteúdo de 1200px + padding lateral responsivo */
+  .container-page {
+    width: 100%;
+    margin-inline: auto;
+    max-width: calc(1200px + 2 * 1.25rem);
+    padding-inline: 1.25rem;
+  }
+  @media (width >= 48rem) {
+    .container-page {
+      max-width: calc(1200px + 2 * 1.5rem);
+      padding-inline: 1.5rem;
+    }
+  }
+  @media (width >= 75rem) {
+    .container-page {
+      max-width: calc(1200px + 2 * 2rem);
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Espaçamento vertical de seção: 64 / 88 / 112px */
+  .section-padding {
+    padding-block: 4rem;
+  }
+  @media (width >= 48rem) {
+    .section-padding {
+      padding-block: 5.5rem;
+    }
+  }
+  @media (width >= 75rem) {
+    .section-padding {
+      padding-block: 7rem;
+    }
+  }
 }
