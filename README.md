@@ -241,9 +241,9 @@ Recomendado: **Vercel** (frontend + Server Actions) + **Supabase** (Postgres, Au
 
 ## 👥 Time
 
-Projeto do curso **AugmenteDesign / AIPL (Artificial Intelligence Product Leaders)** — Tera.
+Projeto do Curso: **AI Product Leaders - Tera**
 
-Fernanda Alves · Bianca Matos · Cicero Janiel · Caroline Guilmo · Jonatan Jamar · Daniel Scharf · Sérgio Henrique
+Membros: Fernanda Alves · Bianca Matos · Cicero Janiel · Caroline Guilmo · Jonatan Jamar · Daniel Scharf · Sérgio Henrique
 
 ---
 
