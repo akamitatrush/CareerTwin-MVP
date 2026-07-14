@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { after } from "next/server";
 
 import { generateReport } from "@/lib/ai/generate-report";
 import { logEvent } from "@/lib/events";
@@ -122,64 +123,72 @@ export async function createAnalysisAction(
 
   await logEvent(supabase, "report_requested", { kind }, user.id);
 
-  try {
-    const payload: { kind: DocumentKind; base64: string }[] = [];
-    for (const doc of [curriculo, linkedin]) {
-      if (!doc) continue;
-      const { data: blob, error: downloadError } = await supabase.storage
-        .from("documents")
-        .download(doc.storage_path);
-      if (downloadError || !blob) {
-        throw new Error("Falha ao ler o documento no Storage.");
+  const analysisId = analysis.id;
+  const userId = user.id;
+
+  // Geração em background: a resposta (redirect) é enviada imediatamente e a
+  // análise continua sendo processada. A página do relatório faz auto-refresh
+  // e reflete o status quando a IA terminar (completed/failed).
+  after(async () => {
+    try {
+      const payload: { kind: DocumentKind; base64: string }[] = [];
+      for (const doc of [curriculo, linkedin]) {
+        if (!doc) continue;
+        const { data: blob, error: downloadError } = await supabase.storage
+          .from("documents")
+          .download(doc.storage_path);
+        if (downloadError || !blob) {
+          throw new Error("Falha ao ler o documento no Storage.");
+        }
+        payload.push({
+          kind: doc.kind,
+          base64: Buffer.from(await blob.arrayBuffer()).toString("base64"),
+        });
       }
-      payload.push({
-        kind: doc.kind,
-        base64: Buffer.from(await blob.arrayBuffer()).toString("base64"),
+
+      const generated = await generateReport({
+        kind,
+        documents: payload,
+        jobTitle,
+        jobDescription,
       });
+
+      const score =
+        kind === "aderencia_vaga"
+          ? (generated.result as AderenciaResult).score
+          : null;
+
+      const { error: updateError } = await supabase
+        .from("analyses")
+        .update({
+          status: "completed",
+          result: generated.result,
+          score,
+          model: generated.model,
+          input_tokens: generated.inputTokens,
+          output_tokens: generated.outputTokens,
+          completed_at: new Date().toISOString(),
+        })
+        .eq("id", analysisId);
+
+      if (updateError) {
+        throw new Error(
+          "Relatório gerado, mas não foi possível salvá-lo. Verifique se a migration 0002 foi aplicada no Supabase.",
+        );
+      }
+
+      await logEvent(supabase, "report_generated", { kind }, userId);
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Erro inesperado na geração.";
+      await supabase
+        .from("analyses")
+        .update({ status: "failed", error_message: message })
+        .eq("id", analysisId);
+      await logEvent(supabase, "report_failed", { kind, message }, userId);
     }
-
-    const generated = await generateReport({
-      kind,
-      documents: payload,
-      jobTitle,
-      jobDescription,
-    });
-
-    const score =
-      kind === "aderencia_vaga"
-        ? (generated.result as AderenciaResult).score
-        : null;
-
-    const { error: updateError } = await supabase
-      .from("analyses")
-      .update({
-        status: "completed",
-        result: generated.result,
-        score,
-        model: generated.model,
-        input_tokens: generated.inputTokens,
-        output_tokens: generated.outputTokens,
-        completed_at: new Date().toISOString(),
-      })
-      .eq("id", analysis.id);
-
-    if (updateError) {
-      throw new Error(
-        "Relatório gerado, mas não foi possível salvá-lo. Verifique se a migration 0002 foi aplicada no Supabase.",
-      );
-    }
-
-    await logEvent(supabase, "report_generated", { kind }, user.id);
-  } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "Erro inesperado na geração.";
-    await supabase
-      .from("analyses")
-      .update({ status: "failed", error_message: message })
-      .eq("id", analysis.id);
-    await logEvent(supabase, "report_failed", { kind, message }, user.id);
-  }
+  });
 
   revalidatePath("/dashboard");
-  redirect(`/dashboard/relatorios/${analysis.id}`);
+  redirect(`/dashboard/relatorios/${analysisId}`);
 }

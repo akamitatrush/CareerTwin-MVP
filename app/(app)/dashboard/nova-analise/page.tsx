@@ -15,6 +15,10 @@ export const metadata: Metadata = {
   title: "Nova análise | CareerTwin",
 };
 
+// A geração do relatório roda em background (after) nesta rota; dá folga
+// para a chamada à Claude API terminar sem ser cortada pela plataforma.
+export const maxDuration = 300;
+
 export default async function NovaAnalisePage({
   searchParams,
 }: {

@@ -179,6 +179,9 @@ export async function generateReport(
     thinking: { type: "adaptive" },
     system: SYSTEM_PROMPT,
     output_config: {
+      // effort "low" mantém boa qualidade em extração/análise estruturada
+      // e reduz muito a latência (ver claude-api: low costuma render excelente).
+      effort: "low",
       format: {
         type: "json_schema",
         schema: input.kind === "perfil" ? PERFIL_SCHEMA : ADERENCIA_SCHEMA,
