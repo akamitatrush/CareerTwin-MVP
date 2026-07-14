@@ -243,7 +243,7 @@ Recomendado: **Vercel** (frontend + Server Actions) + **Supabase** (Postgres, Au
 
 Projeto do curso **AugmenteDesign / AIPL (Artificial Intelligence Product Leaders)** — Tera.
 
-Proprietário: **Cicero Janiel**
+Fernanda Alves · Bianca Matos · Cicero Janiel · Caroline Guilmo · Jonatan Jamar · Daniel Scharf · Sérgio Henrique
 
 ---
 
