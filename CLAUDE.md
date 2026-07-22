@@ -6,7 +6,14 @@ Este arquivo orienta o Claude Code ao trabalhar neste repositório.
 
 Aplicativo web B2C, responsivo e mobile-first: um mentor de carreira com IA para profissionais brasileiros (foco em tecnologia, negócios e marketing) em recolocação, transição de carreira ou busca por melhores oportunidades. O produto analisa currículo, PDF do LinkedIn e vagas específicas para entregar relatórios com diagnóstico, score de aderência e recomendações práticas.
 
-Escopo completo do produto: `docs/CareerTwin AI — One-page 398c32d94bbf806295f4c82e1a33102c.md`
+### Documentação do projeto (ordem de leitura)
+
+Ao assumir/continuar este projeto, leia nesta ordem:
+
+1. **`README.md`** — visão geral, arquitetura e quick start.
+2. **`docs/CONTEXTO-DE-TRABALHO.md`** — metodologia, decisões técnicas (e o porquê), armadilhas já resolvidas e o estado/pendências atuais. **É a "memória" da nossa forma de trabalho — leia antes de codar.**
+3. **`docs/ONBOARDING.md`** — setup passo a passo (clone → `.env.local` → migrations → rodar).
+4. **`docs/CareerTwin AI — One-page 398c32d94bbf806295f4c82e1a33102c.md`** — escopo completo do produto.
 
 - **Mensagem principal:** "Evolua. Reposicione-se. Conquiste."
 - **CTA primário:** "Começar agora" · **CTA secundário:** "Conhecer a plataforma"
