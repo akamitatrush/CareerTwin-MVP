@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LogOut } from "lucide-react";
+import { LogOut, UserRound } from "lucide-react";
 
 import { logoutAction } from "@/app/(auth)/actions";
 import { Wordmark } from "@/components/shared/wordmark";
@@ -22,6 +22,14 @@ export function AppHeader({ userLabel }: { userLabel?: string }) {
               {userLabel}
             </span>
           ) : null}
+          <Button
+            variant="ghost"
+            size="sm"
+            render={<Link href="/dashboard/conta" />}
+          >
+            <UserRound aria-hidden="true" strokeWidth={1.75} />
+            <span className="hidden sm:inline">Conta</span>
+          </Button>
           <form action={logoutAction}>
             <Button type="submit" variant="ghost" size="sm">
               <LogOut aria-hidden="true" strokeWidth={1.75} />

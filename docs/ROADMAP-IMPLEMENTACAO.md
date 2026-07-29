@@ -24,7 +24,7 @@ O código já está pronto e no ar. O que bloqueia hoje é **configuração de p
 
 Tudo aqui é **código**, versionado e com deploy automático.
 
-- [ ] 🧑‍💻 **Excluir minha conta e meus dados** (direito ao esquecimento) — apagar `profiles`, `documents` (Storage) e `analyses`. _Migration + Server Action._ **← sugerido começar por aqui**
+- [x] 🧑‍💻 **Excluir minha conta e meus dados** (direito ao esquecimento) — página `/dashboard/conta`, `deleteAccountAction` (apaga Storage + cascade) e função `delete_own_account()`. ⚙️ **Requer aplicar a migration 0003 no Supabase.**
 - [ ] 🧑‍💻 **Página de Política de Privacidade + Termos de Uso** (conteúdo real; hoje os links no rodapé são placeholders `#`)
 - [ ] 🧑‍💻 **Consentimento explícito** no cadastro e no upload, informando o envio dos documentos à **Anthropic (EUA)**
 - [ ] 🧑‍💻 **CPF**: remover ou reforçar como opcional (minimização — LGPD art. 6º)

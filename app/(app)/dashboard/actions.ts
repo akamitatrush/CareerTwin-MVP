@@ -48,6 +48,43 @@ export async function purchasePackageAction(): Promise<ActionState> {
   return {};
 }
 
+/**
+ * Direito ao esquecimento (LGPD art. 18): exclui todos os dados do usuário.
+ * Remove os arquivos do Storage e apaga a conta (cascade limpa profiles,
+ * documents, analyses e access_packages). Encerra a sessão ao final.
+ */
+export async function deleteAccountAction(): Promise<ActionState> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+
+  // 1. Remove os arquivos da pasta do usuário no Storage (não é coberto por cascade)
+  const { data: files } = await supabase.storage.from("documents").list(user.id);
+  if (files && files.length > 0) {
+    await supabase.storage
+      .from("documents")
+      .remove(files.map((file) => `${user.id}/${file.name}`));
+  }
+
+  // 2. Registra o evento antes de apagar (user_id vira null via ON DELETE SET NULL)
+  await logEvent(supabase, "account_deleted", {}, user.id);
+
+  // 3. Apaga a conta — cascade remove profiles, documents, analyses e pacotes
+  const { error } = await supabase.rpc("delete_own_account");
+  if (error) {
+    return {
+      error:
+        "Não foi possível excluir a conta. Verifique se a migration 0003 foi aplicada e tente novamente.",
+    };
+  }
+
+  // 4. Encerra a sessão e volta para a home
+  await supabase.auth.signOut();
+  redirect("/?conta=excluida");
+}
+
 export async function createAnalysisAction(
   _prev: ActionState,
   formData: FormData,
