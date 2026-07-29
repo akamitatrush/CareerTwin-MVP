@@ -15,6 +15,7 @@ Ao assumir/continuar este projeto, leia nesta ordem:
 3. **`docs/ONBOARDING.md`** — setup passo a passo (clone → `.env.local` → migrations → rodar).
 4. **`docs/SEGURANCA-E-LGPD.md`** — arquitetura de dados, front-end × back-end, fluxos, cibersegurança e plano de adequação à LGPD.
 5. **`docs/ROADMAP-IMPLEMENTACAO.md`** — lista priorizada (P0–P3) do que falta implementar, com o que é código × painel × jurídico.
+   - `docs/RELATORIO-CONFORMIDADE.md` — prestação de contas de privacidade/LGPD para a gestão do projeto.
 6. **`docs/CareerTwin AI — One-page 398c32d94bbf806295f4c82e1a33102c.md`** — escopo completo do produto.
 
 - **Mensagem principal:** "Evolua. Reposicione-se. Conquiste."

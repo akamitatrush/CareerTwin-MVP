@@ -25,7 +25,7 @@ O código já está pronto e no ar. O que bloqueia hoje é **configuração de p
 Tudo aqui é **código**, versionado e com deploy automático.
 
 - [x] 🧑‍💻 **Excluir minha conta e meus dados** (direito ao esquecimento) — página `/dashboard/conta`, `deleteAccountAction` (apaga Storage + cascade) e função `delete_own_account()`. ✅ Migration 0003 aplicada e verificada em produção.
-- [ ] 🧑‍💻 **Página de Política de Privacidade + Termos de Uso** (conteúdo real; hoje os links no rodapé são placeholders `#`)
+- [x] 🧑‍💻 **Página de Política de Privacidade + Termos de Uso** — `/privacidade` e `/termos` com conteúdo real; links do rodapé ativados. ✅ Em produção.
 - [ ] 🧑‍💻 **Consentimento explícito** no cadastro e no upload, informando o envio dos documentos à **Anthropic (EUA)**
 - [ ] 🧑‍💻 **CPF**: remover ou reforçar como opcional (minimização — LGPD art. 6º)
 

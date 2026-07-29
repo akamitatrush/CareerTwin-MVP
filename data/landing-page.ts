@@ -224,9 +224,9 @@ export const footerGroups: FooterGroup[] = [
   {
     title: "Legal",
     links: [
-      { label: "Termos de uso", href: "#" },
-      { label: "Política de privacidade", href: "#" },
-      { label: "Cookies", href: "#" },
+      { label: "Termos de uso", href: "/termos" },
+      { label: "Política de privacidade", href: "/privacidade" },
+      { label: "Cookies", href: "/privacidade#cookies" },
     ],
   },
 ];
