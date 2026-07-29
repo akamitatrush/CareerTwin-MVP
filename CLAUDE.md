@@ -14,7 +14,8 @@ Ao assumir/continuar este projeto, leia nesta ordem:
 2. **`docs/CONTEXTO-DE-TRABALHO.md`** — metodologia, decisões técnicas (e o porquê), armadilhas já resolvidas e o estado/pendências atuais. **É a "memória" da nossa forma de trabalho — leia antes de codar.**
 3. **`docs/ONBOARDING.md`** — setup passo a passo (clone → `.env.local` → migrations → rodar).
 4. **`docs/SEGURANCA-E-LGPD.md`** — arquitetura de dados, front-end × back-end, fluxos, cibersegurança e plano de adequação à LGPD.
-5. **`docs/CareerTwin AI — One-page 398c32d94bbf806295f4c82e1a33102c.md`** — escopo completo do produto.
+5. **`docs/ROADMAP-IMPLEMENTACAO.md`** — lista priorizada (P0–P3) do que falta implementar, com o que é código × painel × jurídico.
+6. **`docs/CareerTwin AI — One-page 398c32d94bbf806295f4c82e1a33102c.md`** — escopo completo do produto.
 
 - **Mensagem principal:** "Evolua. Reposicione-se. Conquiste."
 - **CTA primário:** "Começar agora" · **CTA secundário:** "Conhecer a plataforma"
